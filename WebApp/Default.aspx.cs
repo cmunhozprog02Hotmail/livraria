@@ -53,11 +53,11 @@ namespace WebApp
         {
             if (!IsPostBack)
             {
-                //var ctx = new Repository();
-                //var ds = ctx.Select();
-                GridView1.DataSource = getXMLDataset();
+                var ctx = new Repository();
+                var dados = ctx.SelectFike();
+                GridView1.DataSource = dados;
                 GridView1.DataBind();
-                //dr.Close();
+               
             }
         }
     }
