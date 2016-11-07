@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Editora.DataAccess;
 using System.Data;
+using System.IO;
 
 namespace WebApp
 {
@@ -16,10 +17,11 @@ namespace WebApp
             if (Cache["ds"] == null)
             {
                 var ctx = new Repository();
-                Cache["ds"] = ctx.Select();
+                Cache["ds"] = ctx.SelectDataSet();
             }
             return Cache["ds"] as DataSet;
         }
+
         private DataView getDataView()
         {
             var ds = getDataSet();
@@ -28,8 +30,23 @@ namespace WebApp
             dv.Sort = "CAPA";
             dv.RowFilter = "NUM_EDICAO > 103";
             return dv;
+        }
 
-
+        private DataSet getXMLDataset()
+        {
+            var fn = Server.MapPath(@"~/dados.xml");
+            var ds = new DataSet();
+            if (File.Exists(fn))
+            {
+                ds.ReadXml(fn);
+            }
+            else
+            {
+                var ctx = new Repository();
+                ds = ctx.SelectDataSet();
+                ds.WriteXml(fn);
+            }
+            return ds;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -38,7 +55,7 @@ namespace WebApp
             {
                 //var ctx = new Repository();
                 //var ds = ctx.Select();
-                GridView1.DataSource = getDataView();
+                GridView1.DataSource = getXMLDataset();
                 GridView1.DataBind();
                 //dr.Close();
             }

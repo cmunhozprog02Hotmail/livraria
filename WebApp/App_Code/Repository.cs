@@ -9,7 +9,7 @@ namespace Editora.DataAccess
     //OPERAÇÕES CRUD
     public class Repository
     {
-        public SqlDataReader SelectDR()
+        public SqlDataReader SelectDataReader()
         {
             var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
             var con = new SqlConnection(constr);
@@ -20,14 +20,14 @@ namespace Editora.DataAccess
             return dr;
         }
 
-        public DataSet Select()
+        public DataSet SelectDataSet()
         {
             var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
             var con = new SqlConnection(constr);
             var SQL = "SELECT [NUM_EDICAO], [CAPA], [NIVEL] FROM [REVISTAS] ORDER BY [NUM_EDICAO]";
             var cmd = new SqlCommand(SQL, con);
             var da = new SqlDataAdapter(cmd);
-            var ds = new DataSet();
+            var ds = new DataSet("Dados");
             da.Fill(ds);
             return ds;
 
