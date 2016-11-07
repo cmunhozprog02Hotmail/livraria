@@ -41,6 +41,46 @@ namespace Editora.DataAccess
             return lista;
         }
 
+        public void Update(int NUM_EDICAO, string CAPA, double NIVEL)
+        {
+            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
+            var con = new SqlConnection(constr);
+            var SQL = "update REVISTAS set CAPA=@CAPA,NIVEL=@NIVEL where NUM_EDICAO=@NUM_EDICAO";
+            var cmd = new SqlCommand(SQL, con);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
+            cmd.Parameters.AddWithValue("@CAPA", CAPA);
+            cmd.Parameters.AddWithValue("@NIVEL", NIVEL);
+            con.Open();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                con.Close();
+            }
+            
+
+        }
+
+        public void Delete(int NUM_EDICAO, string CAPA, double NIVEL)
+        {
+            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
+            var con = new SqlConnection(constr);
+            var SQL = "delete REVISTAS where NUM_EDICAO=@NUM_EDICAO";
+            var cmd = new SqlCommand(SQL, con);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
+            con.Open();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public List<Revista> SelectFike()
         {
             var lista = new List<Revista>();

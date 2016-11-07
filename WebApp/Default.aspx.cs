@@ -60,5 +60,17 @@ namespace WebApp
                
             }
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            var ctx = new Repository();
+            ctx.Update(105, "TESTE585", 547.25);
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            var ctx = new Repository();
+            ctx.Delete(105, "", 0);
+        }
     }
 }
