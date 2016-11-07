@@ -15,10 +15,10 @@ namespace WebApp
             if (!IsPostBack)
             {
                 var ctx = new Repository();
-                var dr = ctx.Select();
-                GridView1.DataSource = dr;
+                var ds = ctx.Select();
+                GridView1.DataSource = ds;
                 GridView1.DataBind();
-                dr.Close();
+                //dr.Close();
             }
         }
     }
