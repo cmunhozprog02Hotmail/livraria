@@ -54,7 +54,7 @@ namespace WebApp
             if (!IsPostBack)
             {
                 var ctx = new Repository();
-                var dados = ctx.SelectFike();
+                var dados = ctx.Select();
                 GridView1.DataSource = dados;
                 GridView1.DataBind();
                

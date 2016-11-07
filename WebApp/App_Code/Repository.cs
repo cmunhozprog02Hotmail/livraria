@@ -11,6 +11,36 @@ namespace Editora.DataAccess
     //OPERAÇÕES CRUD
     public class Repository
     {
+
+        public List<Revista> Select()
+        {
+            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
+            var con = new SqlConnection(constr);
+            var SQL = "select [NUM_EDICAO], [CAPA], [NIVEL] from REVISTAS";
+            var cmd = new SqlCommand(SQL, con);
+            var lista = new List<Revista>();
+            con.Open();
+            try
+            {
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    var obj = new Revista();
+                    obj.NUM_EDICAO = Convert.ToInt32(dr[0]);
+                    obj.CAPA = dr[1].ToString();
+                    obj.NIVEL = Convert.ToDouble(dr[2]);
+                    lista.Add(obj);
+                }
+                
+                con.Close();
+            }
+            finally
+            {
+                con.Close();
+            }
+            return lista;
+        }
+
         public List<Revista> SelectFike()
         {
             var lista = new List<Revista>();
