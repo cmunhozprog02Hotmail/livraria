@@ -71,6 +71,14 @@ namespace WebApp
         {
             var ctx = new Repository();
             ctx.Delete(105, "", 0);
+            
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            var ctx = new Repository();
+            ctx.Insert(109, "teste04", 2.3);
+            
         }
     }
 }

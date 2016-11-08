@@ -81,6 +81,26 @@ namespace Editora.DataAccess
             }
         }
 
+        public void Insert(int NUM_EDICAO, string CAPA, double NIVEL)
+        {
+            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
+            var con = new SqlConnection(constr);
+            var SQL = "insert into REVISTAS(NUM_EDICAO, CAPA, NIVEL) values (@NUM_EDICAO, @CAPA, @NIVEL);";
+            var cmd = new SqlCommand(SQL, con);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
+            cmd.Parameters.AddWithValue("@CAPA", CAPA);
+            cmd.Parameters.AddWithValue("@NIVEL", NIVEL);
+            con.Open();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public List<Revista> SelectFike()
         {
             var lista = new List<Revista>();
