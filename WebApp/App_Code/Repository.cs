@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
 using Editora.Domain;
+using System.Configuration;
 
 
 namespace Editora.DataAccess
@@ -11,11 +12,10 @@ namespace Editora.DataAccess
     //OPERAÇÕES CRUD
     public class Repository
     {
-
+        private SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["EDITORA"].ConnectionString);
+        
         public List<Revista> Select()
         {
-            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
-            var con = new SqlConnection(constr);
             var SQL = "select [NUM_EDICAO], [CAPA], [NIVEL] from REVISTAS";
             var cmd = new SqlCommand(SQL, con);
             var lista = new List<Revista>();
@@ -41,15 +41,13 @@ namespace Editora.DataAccess
             return lista;
         }
 
-        public void Update(int NUM_EDICAO, string CAPA, double NIVEL)
+        public void Update(Revista Obj)
         {
-            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
-            var con = new SqlConnection(constr);
             var SQL = "update REVISTAS set CAPA=@CAPA,NIVEL=@NIVEL where NUM_EDICAO=@NUM_EDICAO";
             var cmd = new SqlCommand(SQL, con);
-            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
-            cmd.Parameters.AddWithValue("@CAPA", CAPA);
-            cmd.Parameters.AddWithValue("@NIVEL", NIVEL);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", Obj.NUM_EDICAO);
+            cmd.Parameters.AddWithValue("@CAPA", Obj.CAPA);
+            cmd.Parameters.AddWithValue("@NIVEL", Obj.NIVEL);
             con.Open();
             try
             {
@@ -63,13 +61,11 @@ namespace Editora.DataAccess
 
         }
 
-        public void Delete(int NUM_EDICAO, string CAPA, double NIVEL)
+        public void Delete(Revista Obj)
         {
-            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
-            var con = new SqlConnection(constr);
             var SQL = "delete REVISTAS where NUM_EDICAO=@NUM_EDICAO";
             var cmd = new SqlCommand(SQL, con);
-            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", Obj.NUM_EDICAO);
             con.Open();
             try
             {
@@ -81,15 +77,13 @@ namespace Editora.DataAccess
             }
         }
 
-        public void Insert(int NUM_EDICAO, string CAPA, double NIVEL)
+        public void Insert(Revista Obj)
         {
-            var constr = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EDITORA;Integrated Security=True";
-            var con = new SqlConnection(constr);
             var SQL = "insert into REVISTAS(NUM_EDICAO, CAPA, NIVEL) values (@NUM_EDICAO, @CAPA, @NIVEL);";
             var cmd = new SqlCommand(SQL, con);
-            cmd.Parameters.AddWithValue("@NUM_EDICAO", NUM_EDICAO);
-            cmd.Parameters.AddWithValue("@CAPA", CAPA);
-            cmd.Parameters.AddWithValue("@NIVEL", NIVEL);
+            cmd.Parameters.AddWithValue("@NUM_EDICAO", Obj.NUM_EDICAO);
+            cmd.Parameters.AddWithValue("@CAPA", Obj.CAPA);
+            cmd.Parameters.AddWithValue("@NIVEL", Obj.NIVEL);
             con.Open();
             try
             {

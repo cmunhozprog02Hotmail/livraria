@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Editora.DataAccess;
 using System.Data;
 using System.IO;
+using Editora.Domain;
 
 namespace WebApp
 {
@@ -64,20 +65,20 @@ namespace WebApp
         protected void Button1_Click(object sender, EventArgs e)
         {
             var ctx = new Repository();
-            ctx.Update(105, "TESTE585", 547.25);
+            ctx.Update(new Revista() {NUM_EDICAO = 105, CAPA = "JAVA", NIVEL = 2.75});
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
             var ctx = new Repository();
-            ctx.Delete(105, "", 0);
+            ctx.Delete(new Revista() { NUM_EDICAO = 105, CAPA = "", NIVEL = 0});
             
         }
 
         protected void Button3_Click(object sender, EventArgs e)
         {
             var ctx = new Repository();
-            ctx.Insert(109, "teste04", 2.3);
+            ctx.Insert(new Revista() { NUM_EDICAO = 105, CAPA = "cordel", NIVEL = 3});
             
         }
     }
